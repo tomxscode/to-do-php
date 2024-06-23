@@ -23,6 +23,12 @@ class Usuario {
     $consulta->bindParam(':email', $this->email, PDO::PARAM_STR);
     $consulta->bindParam(':password', $this->password, PDO::PARAM_STR);
     $consulta->execute();
+    /* validar que se creo exitosamente */
+    if ($consulta->rowCount() > 0) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
   public function obtenerUsuario() {
