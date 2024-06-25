@@ -64,6 +64,7 @@ class Usuario {
 
   public function encriptarContrasena() {
     $this->password = password_hash($this->password, PASSWORD_DEFAULT);
+    return $this->getPassword();
   }
 
   public function compararContrasena($contrasena) {
