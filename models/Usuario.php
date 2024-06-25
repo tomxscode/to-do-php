@@ -35,13 +35,29 @@ class Usuario {
     $consulta = $this->conexion->prepare("SELECT * FROM usuarios WHERE email = :email");
     $consulta->bindParam(':email', $this->email, PDO::PARAM_STR);
     $consulta->execute();
-    $resultado = $consulta->fetch(PDO::FETCH_ASSOC);
-    /* asignar valores */
-    $this->id = $resultado['id'];
-    $this->nombre = $resultado['nombre'];
-    $this->email = $resultado['email'];
-    $this->password = $resultado['password'];
-    return $this;
+    if ($consulta->rowCount() == 0) {
+      $respuesta = [
+        'objeto' => null,
+        'success' => false
+      ];
+    } else {
+      $resultado = $consulta->fetch(PDO::FETCH_ASSOC);
+      /* asignar valores */
+      $this->setId($resultado['id']);
+      $this->setNombre($resultado['nombre']);
+      $this->setEmail($resultado['email']);
+      $this->setPassword($resultado['password']);
+      $respuesta = [
+        'usuario' => [
+          'id' => $this->getId(),
+          'nombre' => $this->getNombre(),
+          'email' => $this->getEmail(),
+          'password' => $this->getPassword()
+        ],
+        'success' => true
+      ];
+    }
+    return $respuesta;
   }
   
   /* gestión de contraseñas */
