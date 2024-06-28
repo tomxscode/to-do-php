@@ -23,12 +23,22 @@ class Usuario {
     $consulta->bindParam(':email', $this->email, PDO::PARAM_STR);
     $consulta->bindParam(':password', $this->password, PDO::PARAM_STR);
     $consulta->execute();
-    /* validar que se creo exitosamente */
-    if ($consulta->rowCount() > 0) {
-      return true;
-    } else {
+    // verificar si hay errores
+    $error = $consulta->errorInfo();
+    if ($error[0] != 0) {
       return false;
     }
+    return true;
+  }
+
+  public function verificarEmail() {
+    $consulta = $this->conexion->prepare("SELECT * FROM usuarios WHERE email = :email");
+    $consulta->bindParam(':email', $this->email, PDO::PARAM_STR);
+    $consulta->execute();
+    if ($consulta->rowCount() == 0) {
+      return false;
+    }
+    return true;
   }
 
   public function obtenerUsuario() {

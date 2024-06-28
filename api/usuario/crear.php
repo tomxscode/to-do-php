@@ -11,11 +11,23 @@ $usuario->setNombre($nombre);
 $usuario->setEmail($email);
 $usuario->setPassword($password);
 $usuario->encriptarContrasena();
+// Verificar email
+$emailExiste = $usuario->verificarEmail();
+if ($emailExiste) {
+  http_response_code(400);
+  echo json_encode([
+    'error' => 'El email ya existe',
+    'mensaje' => 'Error al crear el usuario',
+    'success' => false
+  ]);
+  exit();
+}
 $creacionExitosa = $usuario->crearUsuario();
 if (!$creacionExitosa) {
   http_response_code(500);
   echo json_encode([
-    'error' => 'Error al crear el usuario',
+    'mensaje' => 'Error al crear el usuario',
+    'error' => $conexion->errorInfo(),
     'success' => false
   ]);
   exit();
@@ -23,7 +35,8 @@ if (!$creacionExitosa) {
   http_response_code(201);
   echo json_encode([
     'success' => true,
-    'id' => $conexion->lastInsertId()
+    'id' => $conexion->lastInsertId(),
+    'mensaje' => 'Usuario creado correctamente'
   ]);
   exit();
 }
