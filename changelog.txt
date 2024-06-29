@@ -1,10 +1,16 @@
 ****** HISTORIAL DE CAMBIOS ******
-VERSIÓN ACTUAL: 1.0.1-A
+VERSIÓN ACTUAL: 1.0.2-A
+
+versión 1.0.2-a
+  * mejoras en la api
+    * ahora solo permite consultas POST
+  + archivo base js para tratamiento de api
+  + primeras consultas arcaicas para la comunicación de la api
 
 versión 1.0.1-a:
   * mejoras en la api
-      * ahora valida que el email no exista ya en la bd
-      * ahora envia respuestas más explicativas
+    * ahora valida que el email no exista ya en la bd
+    * ahora envia respuestas más explicativas
 
 versión 1.0.0-a:
   versión inicial
